@@ -804,3 +804,37 @@ body {
     cursor: pointer;
 
 }
+#cakeSlice{
+    position:absolute;
+    bottom:120px;
+    left:50%;
+    transform:translateX(-50%) scale(0);
+    font-size:45px;
+    cursor:pointer;
+    transition:transform .5s ease;
+}
+
+#cakeSlice.show{
+    transform:translateX(-50%) scale(1);
+}
+
+.feed{
+    animation:feedCake 1.5s forwards;
+}
+
+@keyframes feedCake{
+
+    0%{
+        transform:translateX(-50%) scale(1);
+    }
+
+    70%{
+        transform:translateX(120px) translateY(-60px) scale(1.1);
+    }
+
+    100%{
+        transform:translateX(150px) translateY(-100px) scale(.2);
+        opacity:0;
+    }
+
+}
