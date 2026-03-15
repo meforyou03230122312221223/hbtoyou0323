@@ -169,9 +169,29 @@ candle.onclick = () => {
         setTimeout(spawnHeart, i * 22);
     }
 
-    setTimeout(showGiftScene, 900);
+    setTimeout(showSlice, 900);
 };
+function showSlice(){
 
+    const slice = document.getElementById("cakeSlice");
+
+    slice.classList.add("show");
+
+    slice.onclick = feedCake;
+}
+
+function feedCake(){
+
+    const slice = document.getElementById("cakeSlice");
+
+    slice.classList.add("feed");
+
+    for(let i=0;i<20;i++){
+        setTimeout(spawnHeart,i*40);
+    }
+
+    setTimeout(showGiftScene,2000);
+}
 const giftScene = document.getElementById("giftScene");
 const giftBox = document.getElementById("giftBox");
 const photoRing = document.getElementById("photoRing");
