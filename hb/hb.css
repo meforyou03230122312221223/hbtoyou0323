@@ -20,8 +20,6 @@ body {
         linear-gradient(135deg, #3a001e, #6a0036 40%, #a1004d 70%, #ff2f86);
 }
 
-
-
 #countdown {
     position: absolute;
     inset: 0;
@@ -72,7 +70,7 @@ body {
 
 @keyframes floatUp {
     to {
-        transform: translateY(-120vh)
+        transform: translateY(-120vh);
     }
 }
 
@@ -96,8 +94,6 @@ body {
     opacity: 1;
     pointer-events: auto;
 }
-
-/* title */
 
 .smallTop {
     font-size: 14px;
@@ -134,7 +130,6 @@ body {
     letter-spacing: 6px;
 }
 
-/* ---------------- cake area ---------------- */
 
 .sceneWrap {
     margin-top: 20px;
@@ -145,10 +140,10 @@ body {
 .flatCake {
     position: relative;
     width: 260px;
-    height: 260px;
+    height: 200px;
+    margin-top: 40px;
+    z-index: 10;
 }
-
-/* common tier */
 
 .cake-tier {
     position: absolute;
@@ -157,10 +152,9 @@ body {
     border-radius: 18px;
     background: #ffb3cc;
     box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
-    overflow: hidden;
-}
+    overflow: visible;
 
-/* cream top edge */
+}
 
 .cake-tier::before {
     content: "";
@@ -173,8 +167,7 @@ body {
     border-radius: 18px 18px 0 0;
 }
 
-/* drip */
-
+/* dripping cream */
 .cake-tier::after {
     content: "";
     position: absolute;
@@ -190,8 +183,7 @@ body {
         radial-gradient(circle at 210px 0, #fff5e6 12px, transparent 13px);
 }
 
-/* tiers */
-/* bottom = biggest */
+
 .cake-tier.bottom {
     width: 220px;
     height: 60px;
@@ -212,9 +204,6 @@ body {
     bottom: 120px;
 }
 
-
-/* yellow dots on top tier */
-
 .cake-tier.top .dots {
     position: absolute;
     top: 32px;
@@ -230,13 +219,8 @@ body {
     height: 10px;
     background: #ffd54f;
     border-radius: 50%;
-    box-shadow:
-        28px 0 #ffd54f,
-        56px 0 #ffd54f,
-        84px 0 #ffd54f;
+    box-shadow: 28px 0 #ffd54f, 56px 0 #ffd54f, 84px 0 #ffd54f;
 }
-
-/* strawberries on middle tier */
 
 .strawberries {
     position: absolute;
@@ -268,12 +252,11 @@ body {
 }
 
 
-/* ---------------- candle ---------------- */
-
 .flatCandle {
     position: absolute;
     left: 50%;
-    bottom: 190px;
+    bottom: 180px;
+    /* FIXED POSITION */
     transform: translateX(-50%);
     width: 12px;
     height: 40px;
@@ -284,6 +267,7 @@ body {
             #ff8fbf 12px);
     border-radius: 6px;
     cursor: pointer;
+    z-index: 5;
 }
 
 .flatCandle.blowing {
@@ -292,11 +276,9 @@ body {
 
 @keyframes tilt {
     60% {
-        transform: translateX(-50%) rotate(-12deg)
+        transform: translateX(-50%) rotate(-12deg);
     }
 }
-
-/* flame */
 
 .flatFlame {
     position: absolute;
@@ -312,7 +294,7 @@ body {
 
 @keyframes flicker {
     to {
-        transform: translateX(-50%) scale(.85)
+        transform: translateX(-50%) scale(.85);
     }
 }
 
@@ -323,11 +305,9 @@ body {
 @keyframes blow {
     to {
         transform: translateX(-170%) scale(.2);
-        opacity: 0
+        opacity: 0;
     }
 }
-
-/* smoke */
 
 .smoke {
     position: absolute;
@@ -344,7 +324,7 @@ body {
 @keyframes smoke {
     to {
         opacity: 0;
-        transform: translate(-50%, -45px) scale(2)
+        transform: translate(-50%, -45px) scale(2);
     }
 }
 
@@ -366,7 +346,7 @@ body {
 @keyframes floatHeart {
     to {
         transform: translateY(-110vh);
-        opacity: 0
+        opacity: 0;
     }
 }
 
@@ -378,6 +358,71 @@ body {
     pointer-events: none;
     z-index: 8;
 }
+
+/* ---------------- bitmoji ---------------- */
+
+#bitmojiArea {
+    position: fixed;
+    bottom: 60px;
+    right: 80px;
+    z-index: 20;
+}
+
+#bitmoji {
+    width: 90px;
+    display: block;
+}
+
+@keyframes bitmojiEat {
+    0% {
+        transform: scale(1);
+    }
+
+    20% {
+        transform: scale(1.3) rotate(-10deg);
+    }
+
+    40% {
+        transform: scale(0.9) rotate(8deg);
+    }
+
+    60% {
+        transform: scale(1.2) rotate(-6deg);
+    }
+
+    80% {
+        transform: scale(0.95) rotate(4deg);
+    }
+
+    100% {
+        transform: scale(1) rotate(0deg);
+    }
+}
+
+.bitmoji-eating {
+    animation: bitmojiEat 0.8s ease forwards;
+}
+
+/* ---------------- cake slice ---------------- */
+
+#cakeSlice {
+    position: fixed;
+    bottom: 200px;
+    left: 50%;
+    font-size: 50px;
+    cursor: grab;
+    opacity: 0;
+    transform: translateX(-50%) scale(0);
+    transition: transform .4s ease, opacity .4s ease;
+    z-index: 1000;
+}
+
+#cakeSlice.show {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+}
+
+/* ---------------- gift scene ---------------- */
 
 #giftScene {
     position: fixed;
@@ -398,11 +443,41 @@ body {
     pointer-events: auto;
 }
 
+/* ---------------- 3D gift box ---------------- */
+
 .gift3d {
     width: 160px;
     height: 160px;
     perspective: 900px;
     cursor: pointer;
+    position: relative;
+}
+
+.gift3d::after {
+    content: "";
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 40px;
+    background: radial-gradient(ellipse, rgba(0, 0, 0, .4), transparent 70%);
+    filter: blur(8px);
+    animation: shadowPulse 6s ease-in-out infinite;
+}
+
+@keyframes shadowPulse {
+
+    0%,
+    100% {
+        transform: translateX(-50%) scaleX(1);
+        opacity: .5;
+    }
+
+    50% {
+        transform: translateX(-50%) scaleX(.8);
+        opacity: .25;
+    }
 }
 
 .box3d {
@@ -410,85 +485,93 @@ body {
     height: 100%;
     position: relative;
     transform-style: preserve-3d;
-    transform: rotateX(-20deg) rotateY(30deg);
+    animation: floatBox 6s ease-in-out infinite;
 }
 
 @keyframes floatBox {
-    from {
-        transform: rotateX(-20deg) rotateY(30deg);
+
+    0%,
+    100% {
+        transform: rotateX(-18deg) rotateY(25deg) translateY(0px);
     }
 
-    to {
-        transform: rotateX(-20deg) rotateY(390deg);
+    50% {
+        transform: rotateX(-18deg) rotateY(25deg) translateY(-14px);
     }
 }
 
-.gift3d::after {
-    content: "";
-    position: absolute;
-    bottom: -40px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 200px;
-    height: 40px;
-    background: radial-gradient(ellipse, rgba(0, 0, 0, .4), transparent 70%);
-    filter: blur(8px);
-}
 
-/* -------- faces -------- */
+
 .face {
     position: absolute;
     width: 160px;
     height: 160px;
-    background: linear-gradient(145deg, #ff4b5c, #b3002d);
-    border: 2px solid #6d001c;
-    box-shadow: inset 0 8px 20px rgba(255, 255, 255, .2),
-        inset 0 -8px 20px rgba(0, 0, 0, .3);
     box-sizing: border-box;
+    overflow: hidden;
 }
-
-/* ribbon stripe */
-
-.face::after {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
-    width: 22px;
-    height: 100%;
-    background: #ffffff;
-    opacity: .9;
-}
-
-/* lighting per face */
 
 .front {
     transform: translateZ(80px);
-    background: #ef3c46;
+    background: linear-gradient(135deg, #ff6b9d, #c8006e);
 }
 
 .back {
     transform: rotateY(180deg) translateZ(80px);
-    background: #c6262e;
+    background: linear-gradient(135deg, #d4005c, #8b0040);
 }
 
 .right {
     transform: rotateY(90deg) translateZ(80px);
-    background: #e1323b;
+    background: linear-gradient(135deg, #e8006a, #a80050);
 }
 
 .left {
     transform: rotateY(-90deg) translateZ(80px);
-    background: #d62c35;
+    background: linear-gradient(135deg, #d9006d, #970048);
+}
+
+.top {
+    transform: rotateX(90deg) translateZ(80px);
+    background: linear-gradient(135deg, #ff85b3, #e0006f);
 }
 
 .bottom {
     transform: rotateX(-90deg) translateZ(80px);
-    background: #b82028;
+    background: linear-gradient(135deg, #b00055, #700035);
 }
 
-/* -------- NEW: Lifting Cap  -------- */
+/* shine on front face */
+.front::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .35) 0%, transparent 55%);
+}
+
+/* ---------------- ribbon stripes ---------------- */
+
+.ribbon-v,
+.ribbon-h {
+    position: absolute;
+    background: rgba(255, 255, 255, .92);
+    pointer-events: none;
+}
+
+.ribbon-v {
+    width: 22px;
+    height: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.ribbon-h {
+    height: 22px;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* ---------------- cap (lid) ---------------- */
 
 .cap {
     position: absolute;
@@ -501,104 +584,159 @@ body {
 
 .cap-face {
     position: absolute;
-    background: #ea3b45;
-    border: 2px solid #9d1d22;
     box-sizing: border-box;
+    overflow: hidden;
 }
 
-/* Cap ribbon stripes */
-.cap-top::after,
-.cap-front::after,
-.cap-back::after {
+.cap-top {
+    width: 168px;
+    height: 168px;
+    left: -4px;
+    top: -4px;
+    background: linear-gradient(135deg, #ff9ec5, #ff2f86);
+    transform: rotateX(90deg) translateZ(82px);
+}
+
+.cap-top::before {
     content: "";
     position: absolute;
-    left: 50%;
-    top: 0;
-    transform: translateX(-50%);
-    width: 22px;
-    height: 100%;
-    background: #ffffff;
-    opacity: .9;
-}
-
-/* Lighting/Color matching the original faces */
-.cap-top {
-    width: 164px;
-    height: 164px;
-    left: -2px;
-    top: -2px;
-    background: #f35b63;
-    transform: rotateX(90deg) translateZ(80px);
+    inset: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, .4) 0%, transparent 60%);
 }
 
 .cap-front {
-    width: 164px;
-    height: 35px;
-    left: -2px;
-    top: -2px;
-    background: #ef3c46;
-    transform: translateZ(82px);
+    width: 168px;
+    height: 38px;
+    left: -4px;
+    top: -4px;
+    background: linear-gradient(135deg, #ff6b9d, #c8006e);
+    transform: translateZ(84px);
 }
 
 .cap-back {
-    width: 164px;
-    height: 35px;
-    left: -2px;
-    top: -2px;
-    background: #c6262e;
-    transform: rotateY(180deg) translateZ(82px);
+    width: 168px;
+    height: 38px;
+    left: -4px;
+    top: -4px;
+    background: #c8006e;
+    transform: rotateY(180deg) translateZ(84px);
 }
 
 .cap-left {
-    width: 164px;
-    height: 35px;
-    left: -2px;
-    top: -2px;
-    background: #d62c35;
-    transform: rotateY(-90deg) translateZ(82px);
+    width: 168px;
+    height: 38px;
+    left: -4px;
+    top: -4px;
+    background: #d9006d;
+    transform: rotateY(-90deg) translateZ(84px);
 }
 
 .cap-right {
-    width: 164px;
-    height: 35px;
-    left: -2px;
-    top: -2px;
-    background: #e1323b;
-    transform: rotateY(90deg) translateZ(82px);
+    width: 168px;
+    height: 38px;
+    left: -4px;
+    top: -4px;
+    background: #e8006a;
+    transform: rotateY(90deg) translateZ(84px);
 }
 
-/* -------- bows -------- */
-
-.bow {
-    position: absolute;
-    width: 40px;
-    height: 22px;
-    border: 4px solid #cfdde5;
-    border-bottom: none;
-    border-radius: 50% 50% 0 0;
-    top: -20px;
-}
-
-.bowL {
-    left: 38px;
-    transform: rotateY(20deg) rotateZ(-12deg);
-}
-
-.bowR {
-    right: 38px;
-    transform: rotateY(-20deg) rotateZ(12deg);
-}
-
-/* -------- cap lifts UP state -------- */
-
+/* cap lift open state */
 .gift3d.open .cap {
-    transform: translateY(-200px);
-    /* Lifts straight up */
+    transform: translateY(-220px);
     opacity: 0;
-    /* Fades out so it doesn't block photos */
 }
 
-/* -------- rotating photo ring -------- */
+/* ---------------- bow ---------------- */
+
+.bow-wrap {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 70px;
+    height: 40px;
+}
+
+.loop {
+    position: absolute;
+    width: 28px;
+    height: 22px;
+    border-radius: 50% 50% 0 0;
+    background: rgba(255, 255, 255, .92);
+    border: 2px solid rgba(255, 200, 220, .6);
+    box-shadow: inset 0 4px 8px rgba(255, 100, 160, .3);
+}
+
+.loop-l {
+    left: 0;
+    top: 8px;
+    transform: rotate(-25deg);
+}
+
+.loop-r {
+    right: 0;
+    top: 8px;
+    transform: rotate(25deg);
+}
+
+.loop-l2 {
+    left: 4px;
+    top: 14px;
+    transform: rotate(-45deg) scale(.75);
+    opacity: .7;
+}
+
+.loop-r2 {
+    right: 4px;
+    top: 14px;
+    transform: rotate(45deg) scale(.75);
+    opacity: .7;
+}
+
+.bow-center {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 40% 35%, #fff 0%, #ff85b3 55%, #c8006e 100%);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+}
+
+.bow-tail {
+    position: absolute;
+    width: 12px;
+    height: 22px;
+    background: rgba(255, 255, 255, .85);
+    border-radius: 0 0 6px 6px;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bow-tail-l,
+.bow-tail-r {
+    position: absolute;
+    width: 10px;
+    height: 18px;
+    background: rgba(255, 255, 255, .7);
+    border-radius: 0 0 5px 5px;
+    bottom: -12px;
+}
+
+.bow-tail-l {
+    left: 28%;
+    transform: rotate(-12deg);
+}
+
+.bow-tail-r {
+    right: 26%;
+    transform: rotate(12deg);
+}
+
+/* ---------------- photo ring ---------------- */
 
 .photoRing {
     position: absolute;
@@ -628,15 +766,8 @@ body {
     box-shadow: 0 25px 60px rgba(0, 0, 0, .5);
     transform-style: preserve-3d;
     backface-visibility: hidden;
-
-    transition:
-        opacity .4s ease,
-        filter .4s ease,
-        transform .4s ease;
-
+    transition: opacity .4s ease, filter .4s ease, transform .4s ease;
     opacity: 0;
-    filter: blur(0px);
-    /* no default blur */
 }
 
 .ringPhoto.center {
@@ -652,6 +783,8 @@ body {
     opacity: 1;
     z-index: 5;
 }
+
+/* ---------------- sparkle ---------------- */
 
 .sparkle {
     position: fixed;
@@ -681,6 +814,8 @@ body {
     }
 }
 
+/* ---------------- open card ---------------- */
+
 .openCard {
     background: linear-gradient(135deg, #fff6e9, #ffe3f1);
     display: flex;
@@ -696,6 +831,8 @@ body {
     color: #ff2f86;
     letter-spacing: 4px;
 }
+
+/* ---------------- letter overlay ---------------- */
 
 #letterOverlay {
     position: fixed;
@@ -720,14 +857,44 @@ body {
     width: 420px;
     max-height: 70vh;
     overflow-y: auto;
-
     background: #ffe8e6;
     padding: 40px;
     border-radius: 12px;
     box-shadow: 0 30px 80px rgba(0, 0, 0, .4);
-
     transform: scale(.7);
     transition: .6s;
+}
+
+#letterOverlay.show .letter {
+    transform: scale(1);
+}
+
+.letter h2 {
+    color: #ff2f86;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+}
+
+.letter p {
+    line-height: 1.6;
+    font-size: 18px;
+    color: #444;
+    position: relative;
+    z-index: 2;
+}
+
+.letter::-webkit-scrollbar {
+    width: 8px;
+}
+
+.letter::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.letter::-webkit-scrollbar-thumb {
+    background: #ff8fbf;
+    border-radius: 10px;
 }
 
 .letterHearts {
@@ -736,12 +903,6 @@ body {
     overflow: hidden;
     pointer-events: none;
     z-index: 1;
-}
-
-.letter h2,
-.letter p {
-    position: relative;
-    z-index: 2;
 }
 
 .letterHeart {
@@ -763,34 +924,6 @@ body {
     }
 }
 
-.letter::-webkit-scrollbar {
-    width: 8px;
-}
-
-.letter::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.letter::-webkit-scrollbar-thumb {
-    background: #ff8fbf;
-    border-radius: 10px;
-}
-
-#letterOverlay.show .letter {
-    transform: scale(1);
-}
-
-.letter h2 {
-    color: #ff2f86;
-    margin-bottom: 20px;
-}
-
-.letter p {
-    line-height: 1.6;
-    font-size: 18px;
-    color: #444;
-}
-
 #direct {
     display: flex;
     align-items: center;
@@ -802,39 +935,14 @@ body {
     border-radius: 18px;
     background-color: rgba(208, 62, 62, 0.708);
     cursor: pointer;
-
-}
-#cakeSlice{
-    position:absolute;
-    bottom:120px;
-    left:50%;
-    transform:translateX(-50%) scale(0);
-    font-size:45px;
-    cursor:pointer;
-    transition:transform .5s ease;
+    color: white;
+    font-family: inherit;
+    font-size: 16px;
 }
 
-#cakeSlice.show{
-    transform:translateX(-50%) scale(1);
-}
-
-.feed{
-    animation:feedCake 1.5s forwards;
-}
-
-@keyframes feedCake{
-
-    0%{
-        transform:translateX(-50%) scale(1);
-    }
-
-    70%{
-        transform:translateX(120px) translateY(-60px) scale(1.1);
-    }
-
-    100%{
-        transform:translateX(150px) translateY(-100px) scale(.2);
-        opacity:0;
-    }
-
+.cake-tier.top::after {
+    background:
+        radial-gradient(circle at 18px 0, #fff5e6 12px, transparent 13px),
+        radial-gradient(circle at 60px 0, #fff5e6 12px, transparent 13px),
+        radial-gradient(circle at 100px 0, #fff5e6 12px, transparent 13px);
 }
