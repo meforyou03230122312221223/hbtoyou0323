@@ -3,7 +3,7 @@ const cDown = document.getElementById("countdown");
 const balloonWrap = document.getElementById("balloon-container");
 
 const now = new Date();
-let target = new Date(new Date().getFullYear(), 2, 23, 0, 0, 0);
+let target = new Date(Date.now() + 5000);
 
 if (now > target) {
     target = new Date(now.getFullYear() + 1, 2, 23);
@@ -171,26 +171,116 @@ candle.onclick = () => {
 
     setTimeout(showSlice, 900);
 };
-function showSlice(){
-
+function showSlice() {
     const slice = document.getElementById("cakeSlice");
-
-    slice.classList.add("show");
-
-    slice.onclick = feedCake;
+    // Reset position to center-bottom before showing
+    slice.style.left = "50%";
+    slice.style.top = "";
+    slice.style.bottom = "200px";
+    slice.style.transform = "translateX(-50%) scale(1)";
+    slice.style.opacity = "1";
+    enableDrag(slice);
 }
 
-function feedCake(){
+function enableDrag(slice) {
+    let dragging = false;
+    let fed = false;
 
-    const slice = document.getElementById("cakeSlice");
+    slice.addEventListener("mousedown", (e) => {
+        if (fed) return;
+        dragging = true;
 
-    slice.classList.add("feed");
+        // Get current visual position BEFORE changing anything
+        const rect = slice.getBoundingClientRect();
 
-    for(let i=0;i<20;i++){
-        setTimeout(spawnHeart,i*40);
+        slice.style.transition = "none";
+        slice.style.position = "fixed";
+        slice.style.bottom = "";          // ← clear bottom first
+        slice.style.transform = "none";   // ← clear transform first
+
+        // Use the actual rendered position so it doesn't jump
+        slice.style.left = rect.left + "px";
+        slice.style.top = rect.top + "px";
+
+        slice.style.cursor = "grabbing";
+        e.preventDefault();
+    });
+
+    document.addEventListener("mouseup", () => {
+        dragging = false;
+        slice.style.cursor = "grab";
+    });
+
+    document.addEventListener("mousemove", (e) => {
+        if (!dragging || fed) return;
+        slice.style.left = e.clientX - 25 + "px";
+        slice.style.top = e.clientY - 25 + "px";
+        checkFeed(slice, () => { fed = true; });
+    });
+}
+function checkFeed(slice, onFed) {
+    const bitmoji = document.getElementById("bitmoji");
+    if (!bitmoji) return;
+
+    const sliceRect = slice.getBoundingClientRect();
+    const mouthRect = bitmoji.getBoundingClientRect();
+
+    const overlap =
+        sliceRect.left < mouthRect.right &&
+        sliceRect.right > mouthRect.left &&
+        sliceRect.top < mouthRect.bottom &&
+        sliceRect.bottom > mouthRect.top;
+
+    if (overlap) {
+        onFed();
+
+        // 🎵 nom sound
+        const nom = new Audio();
+        nom.src = "data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAA" +
+            "ABAAEAQB8AAEAfAAABAAgAZGF0YU" + "A".repeat(40);
+
+
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playMunch(time, freq, duration) {
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, time);
+            osc.frequency.exponentialRampToValueAtTime(freq * 0.4, time + duration);
+
+            gain.gain.setValueAtTime(0.4, time);
+            gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+
+            osc.start(time);
+            osc.stop(time + duration);
+        }
+
+        const now = audioCtx.currentTime;
+        playMunch(now,        400, 0.12);  
+        playMunch(now + 0.15, 350, 0.12);  
+        playMunch(now + 0.30, 380, 0.10);   
+
+
+        const bitmojiEl = document.getElementById("bitmoji");
+        bitmojiEl.classList.remove("bitmoji-eating");
+        void bitmojiEl.offsetWidth; 
+        bitmojiEl.classList.add("bitmoji-eating");
+        slice.style.transition = "transform 0.3s ease, opacity 0.3s ease";
+        slice.style.transform = "scale(0)";
+        slice.style.opacity = "0";
+        setTimeout(() => slice.remove(), 300);
+
+        for (let i = 0; i < 25; i++) {
+            setTimeout(spawnHeart, i * 30);
+        }
+
+        setTimeout(showGiftScene, 2000);
     }
-
-    setTimeout(showGiftScene,2000);
 }
 const giftScene = document.getElementById("giftScene");
 const giftBox = document.getElementById("giftBox");
@@ -437,4 +527,35 @@ function spawnLetterHeart() {
     setTimeout(() => {
         h.remove();
     }, 8000);
+}
+
+function removeWhiteBg(imgEl) {
+    const canvas = document.createElement("canvas");
+    canvas.width = imgEl.naturalWidth;
+    canvas.height = imgEl.naturalHeight;
+
+    const ctx = canvas.getContext("2d");
+    ctx.drawImage(imgEl, 0, 0);
+
+    const data = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const d = data.data;
+
+    for (let i = 0; i < d.length; i += 4) {
+        const r = d[i], g = d[i + 1], b = d[i + 2];
+
+        if (r > 200 && g > 200 && b > 200) {
+            d[i + 3] = 0;
+        }
+    }
+
+    ctx.putImageData(data, 0, 0);
+
+    imgEl.src = canvas.toDataURL();
+}
+
+const bitmojiImg = document.getElementById("bitmoji");
+if (bitmojiImg.complete) {
+    removeWhiteBg(bitmojiImg);
+} else {
+    bitmojiImg.onload = () => removeWhiteBg(bitmojiImg);
 }
