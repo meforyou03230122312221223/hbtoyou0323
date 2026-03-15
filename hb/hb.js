@@ -3,10 +3,10 @@ const cDown = document.getElementById("countdown");
 const balloonWrap = document.getElementById("balloon-container");
 
 const now = new Date();
-let target = new Date(new Date().getFullYear(), 2, 23, 0, -15, 0);
+let target = new Date(now.getFullYear(), 2, 23, 0, -15, 0);
 
 if (now > target) {
-    target = new Date(now.getFullYear() + 1, 2, 23);
+    target = new Date(now.getFullYear() + 1, 2, 23, 0, -15, 0);
 }
 
 function spawnBalloon() {
