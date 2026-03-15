@@ -1,0 +1,806 @@
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    overflow: hidden;
+    font-family: "Comic Sans MS", system-ui, sans-serif;
+    background: #ffdbe6;
+}
+
+.bg {
+    position: fixed;
+    inset: 0;
+    background:
+        radial-gradient(circle at 15% 20%, rgba(255, 182, 193, .4), transparent 40%),
+        radial-gradient(circle at 80% 25%, rgba(255, 105, 180, .3), transparent 40%),
+        radial-gradient(circle at 25% 75%, rgba(255, 20, 147, .25), transparent 45%),
+        linear-gradient(135deg, #3a001e, #6a0036 40%, #a1004d 70%, #ff2f86);
+}
+
+
+
+#countdown {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    font-weight: bold;
+    color: #ff2f86;
+    z-index: 20;
+    transition: .8s;
+}
+
+#countdown.hidden {
+    opacity: 0;
+    transform: scale(.8);
+    pointer-events: none;
+}
+
+/* ---------------- balloons ---------------- */
+
+#balloon-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.balloon {
+    position: absolute;
+    bottom: -120px;
+    width: 60px;
+    height: 80px;
+    border-radius: 50%;
+    animation: floatUp linear forwards;
+}
+
+.balloon::after {
+    content: "";
+    position: absolute;
+    bottom: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 14px;
+    background: #888;
+}
+
+@keyframes floatUp {
+    to {
+        transform: translateY(-120vh)
+    }
+}
+
+/* ---------------- hero scene ---------------- */
+
+.heroScene {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding-top: 70px;
+    opacity: 0;
+    pointer-events: none;
+    transition: 1s;
+    z-index: 15;
+}
+
+.heroScene.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* title */
+
+.smallTop {
+    font-size: 14px;
+    letter-spacing: 3px;
+    color: #ff6aa6;
+    margin-bottom: 8px;
+}
+
+.bigTitle {
+    font-size: 68px;
+    font-weight: 900;
+    color: #da7295;
+}
+
+.name {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    margin-top: -10px;
+    color: #ff2f86;
+    font-family: cursive;
+}
+
+.sub {
+    margin-top: 10px;
+    font-size: 18px;
+    color: #d86185;
+}
+
+.divider {
+    margin: 16px 0 6px;
+    color: #ff6aa6;
+    letter-spacing: 6px;
+}
+
+/* ---------------- cake area ---------------- */
+
+.sceneWrap {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.flatCake {
+    position: relative;
+    width: 260px;
+    height: 260px;
+}
+
+/* common tier */
+
+.cake-tier {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 18px;
+    background: #ffb3cc;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
+    overflow: hidden;
+}
+
+/* cream top edge */
+
+.cake-tier::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 22px;
+    background: #fff5e6;
+    border-radius: 18px 18px 0 0;
+}
+
+/* drip */
+
+.cake-tier::after {
+    content: "";
+    position: absolute;
+    top: 16px;
+    left: 0;
+    right: 0;
+    height: 18px;
+    background:
+        radial-gradient(circle at 18px 0, #fff5e6 12px, transparent 13px),
+        radial-gradient(circle at 60px 0, #fff5e6 12px, transparent 13px),
+        radial-gradient(circle at 110px 0, #fff5e6 12px, transparent 13px),
+        radial-gradient(circle at 160px 0, #fff5e6 12px, transparent 13px),
+        radial-gradient(circle at 210px 0, #fff5e6 12px, transparent 13px);
+}
+
+/* tiers */
+/* bottom = biggest */
+.cake-tier.bottom {
+    width: 220px;
+    height: 60px;
+    bottom: 0;
+}
+
+/* middle = medium */
+.cake-tier.middle {
+    width: 180px;
+    height: 60px;
+    bottom: 60px;
+}
+
+/* top = smallest */
+.cake-tier.top {
+    width: 140px;
+    height: 55px;
+    bottom: 120px;
+}
+
+
+/* yellow dots on top tier */
+
+.cake-tier.top .dots {
+    position: absolute;
+    top: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 18px;
+}
+
+.cake-tier.top .dots::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    background: #ffd54f;
+    border-radius: 50%;
+    box-shadow:
+        28px 0 #ffd54f,
+        56px 0 #ffd54f,
+        84px 0 #ffd54f;
+}
+
+/* strawberries on middle tier */
+
+.strawberries {
+    position: absolute;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 24px;
+}
+
+.strawberries span {
+    width: 12px;
+    height: 16px;
+    background: #ff4d4d;
+    border-radius: 0 0 8px 8px;
+    position: relative;
+}
+
+.strawberries span::before {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 10px;
+    height: 6px;
+    background: #4caf50;
+    border-radius: 0 0 6px 6px;
+}
+
+
+/* ---------------- candle ---------------- */
+
+.flatCandle {
+    position: absolute;
+    left: 50%;
+    bottom: 190px;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 40px;
+    background: repeating-linear-gradient(180deg,
+            #ff2f86,
+            #ff2f86 6px,
+            #ff8fbf 6px,
+            #ff8fbf 12px);
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.flatCandle.blowing {
+    animation: tilt .6s forwards;
+}
+
+@keyframes tilt {
+    60% {
+        transform: translateX(-50%) rotate(-12deg)
+    }
+}
+
+/* flame */
+
+.flatFlame {
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px;
+    height: 20px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 70%, #fff6a8 0%, #ffb703 40%, #ff7a00 70%);
+    animation: flicker .15s infinite alternate;
+}
+
+@keyframes flicker {
+    to {
+        transform: translateX(-50%) scale(.85)
+    }
+}
+
+.flatFlame.blowing {
+    animation: blow .6s forwards;
+}
+
+@keyframes blow {
+    to {
+        transform: translateX(-170%) scale(.2);
+        opacity: 0
+    }
+}
+
+/* smoke */
+
+.smoke {
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(200, 200, 200, .6), transparent 70%);
+    transform: translateX(-50%);
+    animation: smoke 1.2s forwards;
+}
+
+@keyframes smoke {
+    to {
+        opacity: 0;
+        transform: translate(-50%, -45px) scale(2)
+    }
+}
+
+/* ---------------- hearts float ---------------- */
+
+#hearts {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 5;
+}
+
+.heart {
+    position: absolute;
+    color: #ff5fa2;
+    animation: floatHeart linear forwards;
+}
+
+@keyframes floatHeart {
+    to {
+        transform: translateY(-110vh);
+        opacity: 0
+    }
+}
+
+/* ---------------- fireworks ---------------- */
+
+#fireworks {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 8;
+}
+
+#giftScene {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: transparent;
+    backdrop-filter: blur(4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: .8s;
+    z-index: 60;
+}
+
+#giftScene.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.gift3d {
+    width: 160px;
+    height: 160px;
+    perspective: 900px;
+    cursor: pointer;
+}
+
+.box3d {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    transform: rotateX(-20deg) rotateY(30deg);
+}
+
+@keyframes floatBox {
+    from {
+        transform: rotateX(-20deg) rotateY(30deg);
+    }
+
+    to {
+        transform: rotateX(-20deg) rotateY(390deg);
+    }
+}
+
+.gift3d::after {
+    content: "";
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 40px;
+    background: radial-gradient(ellipse, rgba(0, 0, 0, .4), transparent 70%);
+    filter: blur(8px);
+}
+
+/* -------- faces -------- */
+.face {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    background: linear-gradient(145deg, #ff4b5c, #b3002d);
+    border: 2px solid #6d001c;
+    box-shadow: inset 0 8px 20px rgba(255, 255, 255, .2),
+        inset 0 -8px 20px rgba(0, 0, 0, .3);
+    box-sizing: border-box;
+}
+
+/* ribbon stripe */
+
+.face::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 100%;
+    background: #ffffff;
+    opacity: .9;
+}
+
+/* lighting per face */
+
+.front {
+    transform: translateZ(80px);
+    background: #ef3c46;
+}
+
+.back {
+    transform: rotateY(180deg) translateZ(80px);
+    background: #c6262e;
+}
+
+.right {
+    transform: rotateY(90deg) translateZ(80px);
+    background: #e1323b;
+}
+
+.left {
+    transform: rotateY(-90deg) translateZ(80px);
+    background: #d62c35;
+}
+
+.bottom {
+    transform: rotateX(-90deg) translateZ(80px);
+    background: #b82028;
+}
+
+/* -------- NEW: Lifting Cap  -------- */
+
+.cap {
+    position: absolute;
+    width: 160px;
+    height: 160px;
+    transform-style: preserve-3d;
+    transition: transform 1.2s cubic-bezier(.2, .9, .2, 1), opacity 1s ease 0.5s;
+    z-index: 10;
+}
+
+.cap-face {
+    position: absolute;
+    background: #ea3b45;
+    border: 2px solid #9d1d22;
+    box-sizing: border-box;
+}
+
+/* Cap ribbon stripes */
+.cap-top::after,
+.cap-front::after,
+.cap-back::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 100%;
+    background: #ffffff;
+    opacity: .9;
+}
+
+/* Lighting/Color matching the original faces */
+.cap-top {
+    width: 164px;
+    height: 164px;
+    left: -2px;
+    top: -2px;
+    background: #f35b63;
+    transform: rotateX(90deg) translateZ(80px);
+}
+
+.cap-front {
+    width: 164px;
+    height: 35px;
+    left: -2px;
+    top: -2px;
+    background: #ef3c46;
+    transform: translateZ(82px);
+}
+
+.cap-back {
+    width: 164px;
+    height: 35px;
+    left: -2px;
+    top: -2px;
+    background: #c6262e;
+    transform: rotateY(180deg) translateZ(82px);
+}
+
+.cap-left {
+    width: 164px;
+    height: 35px;
+    left: -2px;
+    top: -2px;
+    background: #d62c35;
+    transform: rotateY(-90deg) translateZ(82px);
+}
+
+.cap-right {
+    width: 164px;
+    height: 35px;
+    left: -2px;
+    top: -2px;
+    background: #e1323b;
+    transform: rotateY(90deg) translateZ(82px);
+}
+
+/* -------- bows -------- */
+
+.bow {
+    position: absolute;
+    width: 40px;
+    height: 22px;
+    border: 4px solid #cfdde5;
+    border-bottom: none;
+    border-radius: 50% 50% 0 0;
+    top: -20px;
+}
+
+.bowL {
+    left: 38px;
+    transform: rotateY(20deg) rotateZ(-12deg);
+}
+
+.bowR {
+    right: 38px;
+    transform: rotateY(-20deg) rotateZ(12deg);
+}
+
+/* -------- cap lifts UP state -------- */
+
+.gift3d.open .cap {
+    transform: translateY(-200px);
+    /* Lifts straight up */
+    opacity: 0;
+    /* Fades out so it doesn't block photos */
+}
+
+/* -------- rotating photo ring -------- */
+
+.photoRing {
+    position: absolute;
+    left: 50%;
+    top: 10px;
+    width: 1px;
+    height: 1px;
+    transform-style: preserve-3d;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+}
+
+.gift3d.open .photoRing {
+    opacity: 1;
+}
+
+.ringPhoto {
+    position: absolute;
+    width: 150px;
+    height: 190px;
+    left: -75px;
+    top: -95px;
+    background-size: cover;
+    background-position: center;
+    border-radius: 18px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, .5);
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+
+    transition:
+        opacity .4s ease,
+        filter .4s ease,
+        transform .4s ease;
+
+    opacity: 0;
+    filter: blur(0px);
+    /* no default blur */
+}
+
+.ringPhoto.center {
+    transform: scale(1.25);
+    filter: blur(0px);
+    opacity: 1;
+    z-index: 10;
+}
+
+.ringPhoto.side {
+    transform: scale(0.9);
+    filter: blur(4px);
+    opacity: 1;
+    z-index: 5;
+}
+
+.sparkle {
+    position: fixed;
+    width: 6px;
+    height: 6px;
+    background: white;
+    border-radius: 50%;
+    pointer-events: none;
+    box-shadow: 0 0 10px #fff, 0 0 20px #ff8fab;
+    animation: sparkleAnim 1s linear forwards;
+}
+
+@keyframes sparkleAnim {
+    0% {
+        transform: scale(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.5);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-40px) scale(0);
+        opacity: 0;
+    }
+}
+
+.openCard {
+    background: linear-gradient(135deg, #fff6e9, #ffe3f1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 3px solid #ff8fbf;
+}
+
+.cardText {
+    font-size: 28px;
+    font-weight: bold;
+    color: #ff2f86;
+    letter-spacing: 4px;
+}
+
+#letterOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: .6s;
+    z-index: 100;
+}
+
+#letterOverlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.letter {
+    position: relative;
+    width: 420px;
+    max-height: 70vh;
+    overflow-y: auto;
+
+    background: #ffe8e6;
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, .4);
+
+    transform: scale(.7);
+    transition: .6s;
+}
+
+.letterHearts {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.letter h2,
+.letter p {
+    position: relative;
+    z-index: 2;
+}
+
+.letterHeart {
+    position: absolute;
+    color: rgba(252, 0, 105, 0.668);
+    font-size: 32px;
+    animation: floatLetterHeart linear forwards;
+}
+
+@keyframes floatLetterHeart {
+    from {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateY(-500px);
+        opacity: 0;
+    }
+}
+
+.letter::-webkit-scrollbar {
+    width: 8px;
+}
+
+.letter::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.letter::-webkit-scrollbar-thumb {
+    background: #ff8fbf;
+    border-radius: 10px;
+}
+
+#letterOverlay.show .letter {
+    transform: scale(1);
+}
+
+.letter h2 {
+    color: #ff2f86;
+    margin-bottom: 20px;
+}
+
+.letter p {
+    line-height: 1.6;
+    font-size: 18px;
+    color: #444;
+}
+
+#direct {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    height: 40px;
+    width: 100px;
+    border: none;
+    border-radius: 18px;
+    background-color: rgba(208, 62, 62, 0.708);
+    cursor: pointer;
+
+}
