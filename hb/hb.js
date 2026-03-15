@@ -3,7 +3,7 @@ const cDown = document.getElementById("countdown");
 const balloonWrap = document.getElementById("balloon-container");
 
 const now = new Date();
-let target = new Date(Date.now() + 5000);
+let target = new Date(new Date().getFullYear(), 2, 23, 0, 0, 0);
 
 if (now > target) {
     target = new Date(now.getFullYear() + 1, 2, 23);
